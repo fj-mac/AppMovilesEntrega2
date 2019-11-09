@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "973919430949",
+    "firebase_url": "https://tuparque-3772.firebaseio.com",
+    "project_id": "tuparque-3772",
+    "storage_bucket": "tuparque-3772.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973919430949:android:b921d142347972980fd2cc",
+        "android_client_info": {
+          "package_name": "com.example.tuparquej"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973919430949-qtkhn32s2gtvqbh559pi3p0uruvudnn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tuparquej",
+            "certificate_hash": "eb66ea438b4ee7b46f37aedf17ef30d6b7896dc8"
+          }
+        },
+        {
+          "client_id": "973919430949-7vmg9d30uqrs3j7299j8odbolpeqrtts.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWcSTxvIveD8d3xqgQgmnigjr_RZEO0wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973919430949-7vmg9d30uqrs3j7299j8odbolpeqrtts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
