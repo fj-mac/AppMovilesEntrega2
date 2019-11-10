@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class menu extends AppCompatActivity {
     private ImageButton encontrarParques;
     private ImageButton login;
     private ImageButton logout;
+    public static ArrayList<Entidad> nuevaLista;
 
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
     private CollectionReference parques=db.collection("Parques");
@@ -101,39 +103,22 @@ public class menu extends AppCompatActivity {
             
             if(Login.user!=null)
             {
-                parques.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if(e !=null){
-                            Toast.makeText(menu.this, "Error entrando a base de datos", Toast.LENGTH_SHORT).show();
-                            return;
+                nuevaLista=new ArrayList<>();
+                for(int i=0;i<Home.listItems.size();i++)
+                {
+                    for (int j=0;j<Login.listaFavoritos.size();j++)
+                    {
+                        if(Home.listItems.get(i).getId()==Login.listaFavoritos.get(j))
+                        {
+                            nuevaLista.add(Home.listItems.get(i));
                         }
-                        Home.listItems=new ArrayList<>();
-                        for(QueryDocumentSnapshot documentSnapshots: queryDocumentSnapshots){
-                            try{
-                                Entidad entid=documentSnapshots.toObject(Entidad.class);
-                                if(Login.listaFavoritos.contains(entid.getId()))
-                                {
-                                    Home.listItems.add(entid);
-                                    Toast.makeText(menu.this, "Se agrego los favoritos", Toast.LENGTH_SHORT).show();
-
-
-                                }
-                            }catch (Exception exep)
-                            {
-                                Toast.makeText(menu.this, "Parece que estamos teniendo problemas. Discúlpanos e intenta más tarde", Toast.LENGTH_SHORT).show();
-                                
-                            }
-
-                        }
-                        Intent intent =new Intent(menu.this, Home.class);
-                        intent.putExtra("VieneDe","favoritos");
-                        startActivity(intent);
-                        finish();
-                        //ver favoritos
-                       
                     }
-                });
+
+                }
+                Login.parquesFavoritos=new ArrayList<>();
+                Login.parquesFavoritos=nuevaLista;
+                Login.dehome=1;
+                finish();
             }
             else{
                 Toast.makeText(this, "Debe iniciar sesión para poder ver sus favoritos", Toast.LENGTH_SHORT).show();
@@ -149,8 +134,8 @@ public class menu extends AppCompatActivity {
 
     }
     private void verParques(){
+        Login.dehome=0;
         Intent intent =new Intent(menu.this, Home.class);
-        intent.putExtra("VieneDe","home");
         startActivity(intent);
         finish();
     }
@@ -185,4 +170,5 @@ public class menu extends AppCompatActivity {
         logout.setVisibility(View.INVISIBLE);
         login.setVisibility(View.VISIBLE);
     }
+
 }

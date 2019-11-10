@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +33,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Home extends AppCompatActivity {
-    private ListView lvItems;
+    private RecyclerView lvItems;
     private Adaptador adaptador;
     private ImageButton menu;
     private ImageButton sort;
@@ -47,7 +50,7 @@ public class Home extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
         menu=findViewById(R.id.imageButtonIrAMenu);
-        lvItems=findViewById(R.id.lvItems);
+        lvItems=(RecyclerView)findViewById(R.id.lvItems);
         sort=(ImageButton)findViewById(R.id.imageView3);
 
 
@@ -82,13 +85,16 @@ public class Home extends AppCompatActivity {
 
         }
     }
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
         Intent myIntent = getIntent(); // gets the previously created intent
         String mensajeDe = myIntent.getStringExtra("VieneDe");
         Log.d("ACA","es: "+mensajeDe);
-        if(mensajeDe.equals("home"))
+        if(Login.dehome==0)
         {
             parques.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
                 @Override
@@ -112,13 +118,18 @@ public class Home extends AppCompatActivity {
                     }
                     adaptador=new Adaptador(Home.this,listItems);
                     lvItems.setAdapter(adaptador);
+                    lvItems.setLayoutManager(new LinearLayoutManager(Home.this));
 
                 }
             });
         }
         else{
-            adaptador=new Adaptador(Home.this,listItems );
+
+
+            adaptador=new Adaptador(Home.this,Login.parquesFavoritos);
+            adaptador.notifyDataSetChanged();
             lvItems.setAdapter(adaptador);
+            lvItems.setLayoutManager(new LinearLayoutManager(Home.this));
         }
     }
 
@@ -136,11 +147,23 @@ public class Home extends AppCompatActivity {
     }
     private void ordenar(){
 
-        SortPorDistancia sort=new SortPorDistancia(listItems);
-        listItems=sort.getSortByDistance();
-        adaptador=null;
-        adaptador=new Adaptador(Home.this,listItems );
-        lvItems.setAdapter(adaptador);
+        if(Login.dehome==0)
+        {
+            SortPorDistancia sort=new SortPorDistancia(listItems);
+            listItems=sort.getSortByDistance();
+            adaptador=null;
+            adaptador=new Adaptador(Home.this,listItems );
+            lvItems.setAdapter(adaptador);
+        }
+        else
+        {
+            SortPorDistancia sort=new SortPorDistancia(Login.parquesFavoritos);
+            Login.parquesFavoritos=sort.getSortByDistance();
+            adaptador=null;
+            adaptador=new Adaptador(Home.this,Login.parquesFavoritos );
+            lvItems.setAdapter(adaptador);
+        }
+
 
     }
     public void cargarParques(){

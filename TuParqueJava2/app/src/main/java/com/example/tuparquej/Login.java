@@ -55,6 +55,8 @@ public class Login extends AppCompatActivity {
     private EditText clave;
     private EditText clave2;
     public static ArrayList<Integer> listaFavoritos;
+    public static ArrayList<Entidad> parquesFavoritos;
+    public static int dehome=0;
     public static FirebaseUser user=null;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
 

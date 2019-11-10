@@ -12,11 +12,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Adaptador extends BaseAdapter {
+public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     private Context context;
     private ArrayList<Entidad> listItems;
     private Entidad item;
@@ -27,13 +30,12 @@ public class Adaptador extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         //Numero de datos a cargar (en este caso 10 mas cercanos)
         return listItems.size();
 
     }
 
-    @Override
     public Object getItem(int position) {
         return listItems.get(position);
     }
@@ -43,59 +45,55 @@ public class Adaptador extends BaseAdapter {
         return 0;
     }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item,parent,false));
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         item=(Entidad) getItem(position);
-
-        convertView= LayoutInflater.from(context).inflate(R.layout.item, null);
-
-        ImageButton btnFoto= (ImageButton)convertView.findViewById(R.id.buttonParque);
-        TextView nombre=convertView.findViewById(R.id.textViewNombre);
-        TextView barrio=convertView.findViewById(R.id.textViewBarrio);
-        ImageView estrellas=convertView.findViewById(R.id.imageViewEstrellas);
-        TextView distancia=convertView.findViewById(R.id.textViewDistancia);
-
-
         if(item.getImagen()!=null)
         {
-            btnFoto.setBackground(null);
-            Picasso.get().load(item.getImagen()).fit().into(btnFoto);
+            holder.btnFoto.setBackground(null);
+            Picasso.get().load(item.getImagen()).fit().into(holder.btnFoto);
         }
 
 
-        nombre.setText(item.getNombre());
-        barrio.setText(item.getBarrio());
+        holder.nombre.setText(item.getNombre());
+        holder.barrio.setText(item.getBarrio());
 
         double e=item.getEstrellas();
         if(e==0)
         {
-            estrellas.setImageResource(R.drawable.eceroestrellas);
+            holder.estrellas.setImageResource(R.drawable.eceroestrellas);
         }
         else if(e<=1)
         {
-            estrellas.setImageResource(R.drawable.eunaestrella);
+            holder.estrellas.setImageResource(R.drawable.eunaestrella);
         }
         else if(e<=2)
         {
-            estrellas.setImageResource(R.drawable.edosestrellas);
+            holder.estrellas.setImageResource(R.drawable.edosestrellas);
         }
         else if(e<=3)
         {
-            estrellas.setImageResource(R.drawable.etresestrellas);
+            holder.estrellas.setImageResource(R.drawable.etresestrellas);
         }
         else if(e<=4)
         {
-            estrellas.setImageResource(R.drawable.ecuatroestrellas);
+            holder.estrellas.setImageResource(R.drawable.ecuatroestrellas);
         }
         else{
-            estrellas.setImageResource(R.drawable.ecincoestrellas);
+            holder.estrellas.setImageResource(R.drawable.ecincoestrellas);
         }
 
 
-        distancia.setText(item.getDistanciaActual()+" metros");
-        btnFoto.setTag(position);
-        btnFoto.setOnClickListener(new View.OnClickListener() {
+        holder.distancia.setText(item.getDistanciaActual()+" metros");
+
+        holder.btnFoto.setTag(position);
+        holder.btnFoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent =new Intent(context, parque.class);
                 Bundle b =new Bundle();
@@ -104,12 +102,24 @@ public class Adaptador extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
-
-
-        return convertView;
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        ImageButton btnFoto;
+        TextView nombre;
+        TextView barrio;
+        ImageView estrellas;
+        TextView distancia;
+
+        public ViewHolder(View view) {
+            super(view);
+            btnFoto= (ImageButton)view.findViewById(R.id.buttonParque);
+            nombre=view.findViewById(R.id.textViewNombre);
+            barrio=view.findViewById(R.id.textViewBarrio);
+            estrellas=view.findViewById(R.id.imageViewEstrellas);
+            distancia=view.findViewById(R.id.textViewDistancia);
+        }
+    }
 
 
 }
