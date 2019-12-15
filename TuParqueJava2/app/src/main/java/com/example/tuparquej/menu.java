@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -31,6 +32,7 @@ public class menu extends AppCompatActivity {
     private ImageButton login;
     private ImageButton logout;
     public static ArrayList<Entidad> nuevaLista;
+    private Snackbar mensaje;
 
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
     private CollectionReference parques=db.collection("Parques");
@@ -92,7 +94,16 @@ public class menu extends AppCompatActivity {
         else{
             //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
             //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
-            Toast.makeText(this, "Para sugerir debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para sugerir debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+
+            //Toast.makeText(this, "Para sugerir debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
     }
     private void verFavoritos(){
@@ -121,13 +132,28 @@ public class menu extends AppCompatActivity {
                 finish();
             }
             else{
-                Toast.makeText(this, "Debe iniciar sesión para poder ver sus favoritos", Toast.LENGTH_SHORT).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Debe iniciar sesión para poder ver sus favoritos", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(this, "Debe iniciar sesión para poder ver sus favoritos", Toast.LENGTH_SHORT).show();
             }
             
         }
         else{
-
-            Toast.makeText(this, "Para ver favoritos debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para ver favoritos debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "Para ver favoritos debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
 
 
@@ -161,7 +187,15 @@ public class menu extends AppCompatActivity {
         else{
             //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
             //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
-            Toast.makeText(this, "Para realizar iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para realizar iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "Para realizar iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
     }
     public void irALogOut(){

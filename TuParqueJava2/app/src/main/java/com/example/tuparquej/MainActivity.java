@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static double longitude=0;
     public static double latitude=0;
     private Spinner spinner;
+    private Snackbar mensaje;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -163,7 +165,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             else{
                 if(Home.listItems==null)
                 {
-                    Toast.makeText(this, "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Toast.LENGTH_LONG).show();
+                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+
+                    //Toast.makeText(this, "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -175,7 +186,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         }
         else {
-            Toast.makeText(this, "Actualmente solo contamos con cobertura en Bogotá, Colombia", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Actualmente solo contamos con cobertura en Bogotá, Colombia", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+
+            //Toast.makeText(this, "Actualmente solo contamos con cobertura en Bogotá, Colombia", Toast.LENGTH_LONG).show();
         }
 
 
@@ -194,7 +214,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             else{
                 if(Home.listItems==null)
                 {
-                    Toast.makeText(this, "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Toast.LENGTH_LONG).show();
+                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+
+                    //Toast.makeText(this, "Actualmente no dispone del servicio de red. Por favor Intente más tarde", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -207,7 +236,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         else
         {
-            Toast.makeText(this, "En este momento únicamente tenemos soporte en Bogotá. ", Toast.LENGTH_SHORT).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "En este momento únicamente tenemos soporte en Bogotá, Colombia", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "En este momento únicamente tenemos soporte en Bogotá. ", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -225,7 +262,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             else{
                 //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
                 //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
-                Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
             }
         }
 

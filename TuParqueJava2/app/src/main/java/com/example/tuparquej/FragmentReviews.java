@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +40,7 @@ public class FragmentReviews extends Fragment implements View.OnClickListener {
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
     private AdaptadorReviews adaptador;
     private RecyclerView lista;
+    private Snackbar mensaje;
 
     private int index;
     public ArrayList<Review> revs;
@@ -97,24 +99,62 @@ public class FragmentReviews extends Fragment implements View.OnClickListener {
             {
                 if (editTextReview.getText().length()<=5)
                 {
-                    Toast.makeText(getActivity(), "Se debe escribir como mínimo 5 caracteres", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Se debe escribir como mínimo 5 caracteres", Toast.LENGTH_SHORT).show();
+
+                    mensaje = Snackbar.make(getActivity().findViewById(android.R.id.content), "Se debe escribir como mínimo 5 caracteres", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+
                 }
                 else{
                     Map<String, Object> reviewNuevo = new HashMap<>();
                     reviewNuevo.put("nombre", Login.user.getDisplayName());
                     reviewNuevo.put("review", editTextReview.getText().toString());
                     db.collection("Parques").document(index+"").collection("Reviews").add(reviewNuevo);
-                    Toast.makeText(getActivity(), "Se ha agregado su review", Toast.LENGTH_SHORT).show();
+                    mensaje = Snackbar.make(getActivity().findViewById(android.R.id.content), "Se ha agregado su review", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+
+
+                    //Toast.makeText(getActivity(), "Se ha agregado su review", Toast.LENGTH_SHORT).show();
                     editTextReview.setText("");
                 }
                
             }
-            else {
-                Toast.makeText(getActivity(), "Debe iniciar sesión para hacer un review", Toast.LENGTH_SHORT).show();
+            else{
+                //Toast.makeText(getActivity(), "Debe iniciar sesión para hacer un review", Toast.LENGTH_SHORT).show();
+
+                mensaje = Snackbar.make(getActivity().findViewById(android.R.id.content), "Debe iniciar sesión para hacer un review", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
             }
         }
         else{
-            Toast.makeText(getActivity(), " Verifique su conexión a internet", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(getActivity().findViewById(android.R.id.content), "Verifique su conexión a internet", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+
+            //Toast.makeText(getActivity(), " Verifique su conexión a internet", Toast.LENGTH_LONG).show();
         }
 
     }

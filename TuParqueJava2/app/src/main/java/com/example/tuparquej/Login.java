@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,6 +60,7 @@ public class Login extends AppCompatActivity {
     public static int dehome=0;
     public static FirebaseUser user=null;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private Snackbar mensaje;
 
 
 
@@ -111,9 +113,17 @@ public class Login extends AppCompatActivity {
             startActivityForResult(signInIntent, RC_SIGN_IN);
         }
         else{
-            //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+
             //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
-            Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+           // Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -152,7 +162,16 @@ public class Login extends AppCompatActivity {
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             Log.w("OJO", "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(Login.this, "Ocurrio un error en nuestros servidores. Por favor intentelo mas tarde", Toast.LENGTH_LONG).show();
+                                            mensaje = Snackbar.make(findViewById(android.R.id.content), "Ocurrio un error en nuestros servidores. Por favor intentelo mas tarde", Snackbar.LENGTH_INDEFINITE);
+                                            mensaje.setAction("Ok", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    mensaje.dismiss();
+                                                }
+                                            });
+                                            mensaje.show();
+
+                                            //Toast.makeText(Login.this, "Ocurrio un error en nuestros servidores. Por favor intentelo mas tarde", Toast.LENGTH_LONG).show();
                                             //updateUI(null);
                                         }
 
@@ -162,26 +181,55 @@ public class Login extends AppCompatActivity {
                     }
                     else
                     {
-                        Toast.makeText(Login.this, "La contraseña debe contener al menos 6 caracteres", Toast.LENGTH_LONG).show();
+                        mensaje = Snackbar.make(findViewById(android.R.id.content), "La contraseña debe contener al menos 6 caracteres", Snackbar.LENGTH_INDEFINITE);
+                        mensaje.setAction("Ok", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mensaje.dismiss();
+                            }
+                        });
+                        mensaje.show();
+                        //Toast.makeText(Login.this, "La contraseña debe contener al menos 6 caracteres", Toast.LENGTH_LONG).show();
                     }
 
                 }
                 else {
-                    Toast.makeText(this, "La contraseña debe ser menor a 20 caracteres y contener al menos 1 letra mayuscula, un caracter especial y un numero", Toast.LENGTH_LONG).show();
-
+                    mensaje = Snackbar.make(findViewById(android.R.id.content), "La contraseña debe ser menor a 20 caracteres y contener al menos 1 letra mayuscula, un caracter especial y un numero", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+                    //Toast.makeText(this, "La contraseña debe ser menor a 20 caracteres y contener al menos 1 letra mayuscula, un caracter especial y un numero", Toast.LENGTH_LONG).show();
                 }
 
             }
             else
             {
-                Toast.makeText(this, "Las contraseñas no coinciden. Por favor verifiquelas e intente nuevamente", Toast.LENGTH_SHORT).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Las contraseñas no coinciden. Por favor verifiquelas e intente nuevamente", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(this, "Las contraseñas no coinciden. Por favor verifiquelas e intente nuevamente", Toast.LENGTH_SHORT).show();
             }
 
 
         }
         else{
-            //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
-            //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
             Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
 
@@ -210,7 +258,15 @@ public class Login extends AppCompatActivity {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(Login.this, "Ha ingresado un usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                mensaje = Snackbar.make(findViewById(android.R.id.content), "Ha ingresado un usuario o contraseña incorrectos", Snackbar.LENGTH_INDEFINITE);
+                                mensaje.setAction("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mensaje.dismiss();
+                                    }
+                                });
+                                mensaje.show();
+                                //Toast.makeText(Login.this, "Ha ingresado un usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                                 //updateUI(null);
                             }
 
@@ -221,7 +277,15 @@ public class Login extends AppCompatActivity {
         else{
             //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
             //Snackbar snackbar =new Snackbar.make(this,"a",Snackbar.LENGTH_LONG);
-            Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
+            final Snackbar mensaje = Snackbar.make(findViewById(android.R.id.content), "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "Para iniciar sesión debe tener conexión a internet. Verifique e intente más tarde", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -239,8 +303,16 @@ public class Login extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
+                final Snackbar mensaje = Snackbar.make(findViewById(android.R.id.content), ""+e.getMessage(), Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
 
-                Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 // ...
             }
         }
@@ -261,12 +333,28 @@ public class Login extends AppCompatActivity {
                                     verificarFavoritos();
                                 }
                             }).start();
-                            Toast.makeText(Login.this, "Se ha iniciado con el correo: "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            mensaje = Snackbar.make(findViewById(android.R.id.content), "Se ha iniciado con el correo:"+user.getDisplayName(), Snackbar.LENGTH_INDEFINITE);
+                            mensaje.setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mensaje.dismiss();
+                                }
+                            });
+                            mensaje.show();
+                            //Toast.makeText(Login.this, "Se ha iniciado con el correo: "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
                             finish();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(Login.this, "Falla el login", Toast.LENGTH_SHORT).show();
+                            mensaje = Snackbar.make(findViewById(android.R.id.content), "Falla el login:"+user.getDisplayName(), Snackbar.LENGTH_INDEFINITE);
+                            mensaje.setAction("Ok", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mensaje.dismiss();
+                                }
+                            });
+                            mensaje.show();
+                            //Toast.makeText(Login.this, "Falla el login", Toast.LENGTH_SHORT).show();
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
@@ -276,7 +364,15 @@ public class Login extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), ""+e.getMessage(), Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

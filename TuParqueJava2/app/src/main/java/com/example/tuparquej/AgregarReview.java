@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class AgregarReview extends AppCompatActivity {
     private static final String TAG = "AgregarReview";
     private static final String KEY_NOMBRE="nombre";
     private static final String KEY_REVIEW="review";
+    private Snackbar mensaje;
 
     private EditText editTextReview;
 
@@ -37,7 +39,16 @@ public class AgregarReview extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             if(editTextReview.getText().toString().length()<10)
             {
-                Toast.makeText(this, "Debe incluir al menos 10 caracteres", Toast.LENGTH_SHORT).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Debe incluir al menos 10 caracteres", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+
+                //Toast.makeText(this, "Debe incluir al menos 10 caracteres", Toast.LENGTH_SHORT).show();
             }
             else{
                 String nombre=null;
@@ -53,13 +64,31 @@ public class AgregarReview extends AppCompatActivity {
                 note.put(KEY_NOMBRE,nombre);
                 note.put (KEY_REVIEW, review);
                 db.collection("Comentarios").add(note);
-                Toast.makeText(this, "Se ha enviado su comentario", Toast.LENGTH_LONG).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Se ha enviado su comentario", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+
+                //Toast.makeText(this, "Se ha enviado su comentario", Toast.LENGTH_LONG).show();
                 finish();
             }
 
         }
         else {
-            Toast.makeText(this, "Debe tener conexión a internet", Toast.LENGTH_SHORT).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Debe tener conexión a internet", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+
+            //Toast.makeText(this, "Debe tener conexión a internet", Toast.LENGTH_SHORT).show();
             finish();
         }
 
