@@ -211,6 +211,9 @@ public class parque extends AppCompatActivity {
                 fragment=new FragmentAhora();
                 FragmentManager fm=getFragmentManager();
                 FragmentTransaction ft=fm.beginTransaction();
+                Bundle args = new Bundle();
+                args.putInt("id", id);
+                fragment.setArguments(args);
                 ft.replace(R.id.frg,fragment);
                 ft.commit();
             }
