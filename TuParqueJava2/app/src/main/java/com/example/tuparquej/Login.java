@@ -240,39 +240,54 @@ public class Login extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             String email=correo.getText().toString();
             String password=clave.getText().toString();
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                //Log.d(TAG, "signInWithEmail:success");
-                                user = mAuth.getCurrentUser();
-                                new Thread(new Runnable() {
-                                    public void run() {
-                                        verificarFavoritos();
-                                    }
-                                }).start();
-                                finish();
-                                //updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                mensaje = Snackbar.make(findViewById(android.R.id.content), "Ha ingresado un usuario o contraseña incorrectos", Snackbar.LENGTH_INDEFINITE);
-                                mensaje.setAction("Ok", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        mensaje.dismiss();
-                                    }
-                                });
-                                mensaje.show();
-                                //Toast.makeText(Login.this, "Ha ingresado un usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
-                            }
+            if(email.equals("") || password.equals(""))
+            {
+                final Snackbar mensaje = Snackbar.make(findViewById(android.R.id.content), "Debe llenar la información solicitada para continuar.", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+            }
+            else
+            {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    //Log.d(TAG, "signInWithEmail:success");
+                                    user = mAuth.getCurrentUser();
+                                    new Thread(new Runnable() {
+                                        public void run() {
+                                            verificarFavoritos();
+                                        }
+                                    }).start();
+                                    finish();
+                                    //updateUI(user);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    //Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Ha ingresado un usuario o contraseña incorrectos", Snackbar.LENGTH_INDEFINITE);
+                                    mensaje.setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mensaje.dismiss();
+                                        }
+                                    });
+                                    mensaje.show();
+                                    //Toast.makeText(Login.this, "Ha ingresado un usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                    //updateUI(null);
+                                }
 
-                            // ...
-                        }
-                    });
+                                // ...
+                            }
+                        });
+            }
+
         }
         else{
             //Snackbar snackbar = new Snackbar.make(findViewById(android.R.id.content), "Para realizar el LogIn debe tener conexion a internet. Verifique e intente mas tarde", Snackbar.LENGTH_INDEFINITE);
