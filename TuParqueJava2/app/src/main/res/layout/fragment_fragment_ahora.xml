@@ -12,17 +12,20 @@
         android:id="@+id/calidadDeAireActual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="32dp"
         android:text="La calidad de aire actual en este parque es de: " />
     <TextView
         android:id="@+id/comentarioCalidadAire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:text="Lo anterior quiere decir que con la calidad de aire en este nivel puede llegar a ser peligroso para personas con xyz" />
 
     <TextView
         android:id="@+id/seguridadActual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="32dp"
         android:text="La seguridad actual en el parque es de: " />
 
 
