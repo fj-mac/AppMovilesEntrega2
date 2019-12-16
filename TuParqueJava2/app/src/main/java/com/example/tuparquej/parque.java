@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -49,6 +50,7 @@ public class parque extends AppCompatActivity {
     private ImageButton favorito;
     private ImageView imagenParque;
     private FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private Snackbar mensaje;
 
     //Parque seleccionado
     private int pos;
@@ -188,7 +190,15 @@ public class parque extends AppCompatActivity {
                 ft.commit();
             }
             else{
-                Toast.makeText(this, "Para ver los reviews del parque se requiere conexión a internet", Toast.LENGTH_LONG).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Para ver los reviews del parque se requiere conexión a internet", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(this, "Para ver los reviews del parque se requiere conexión a internet", Toast.LENGTH_LONG).show();
             }
 
 
@@ -218,11 +228,27 @@ public class parque extends AppCompatActivity {
                 ft.commit();
             }
             else{
-                Toast.makeText(this, "Para ver el estado actual se requiere conexión a internet", Toast.LENGTH_LONG).show();
+                mensaje = Snackbar.make(findViewById(android.R.id.content), "Para ver el estado actual se requiere conexión a internet", Snackbar.LENGTH_INDEFINITE);
+                mensaje.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mensaje.dismiss();
+                    }
+                });
+                mensaje.show();
+                //Toast.makeText(this, "Para ver el estado actual se requiere conexión a internet", Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText(this, "Para acceder a las funciones Premium debe iniciar sesión", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para acceder a las funciones Premium debe iniciar seseón", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "Para acceder a las funciones Premium debe iniciar sesión", Toast.LENGTH_LONG).show();
         }
     }
     public void openDetails2(Entidad par){
@@ -282,12 +308,28 @@ public class parque extends AppCompatActivity {
             else{
                 if(verif==0)
                 {
-                    Toast.makeText(this, "No hay conexión a internet. Si tiene mapas offline, vuelva a presionar GO para continuar", Toast.LENGTH_LONG).show();
+                    mensaje = Snackbar.make(findViewById(android.R.id.content), "No hay conexión a internet. Si tiene mapas offline, vuelva a presionar GO para continuar", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+                    //Toast.makeText(this, "No hay conexión a internet. Si tiene mapas offline, vuelva a presionar GO para continuar", Toast.LENGTH_LONG).show();
                     verif++;
                 }
                 else{
                     verif=0;
-                    Toast.makeText(this, "Ha sido redireccionado a Maps Offline", Toast.LENGTH_LONG).show();
+                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Ha sido redireccionado a Maps Offline", Snackbar.LENGTH_INDEFINITE);
+                    mensaje.setAction("Ok", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mensaje.dismiss();
+                        }
+                    });
+                    mensaje.show();
+                    //Toast.makeText(this, "Ha sido redireccionado a Maps Offline", Toast.LENGTH_LONG).show();
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     startActivity(mapIntent);
@@ -328,7 +370,15 @@ public class parque extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde", Toast.LENGTH_SHORT).show();
+                                mensaje = Snackbar.make(findViewById(android.R.id.content), "Parece que tenemos un problema. Inténtalo más tarde", Snackbar.LENGTH_INDEFINITE);
+                                mensaje.setAction("Ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mensaje.dismiss();
+                                    }
+                                });
+                                mensaje.show();
+                                //Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -348,7 +398,15 @@ public class parque extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Parece que tenemos un problema. Inténtalo más tarde", Snackbar.LENGTH_INDEFINITE);
+                                    mensaje.setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mensaje.dismiss();
+                                        }
+                                    });
+                                    mensaje.show();
+                                    //Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
@@ -366,7 +424,15 @@ public class parque extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde", Toast.LENGTH_SHORT).show();
+                                    mensaje = Snackbar.make(findViewById(android.R.id.content), "Parece que tenemos un problema. Inténtalo más tarde", Snackbar.LENGTH_INDEFINITE);
+                                    mensaje.setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mensaje.dismiss();
+                                        }
+                                    });
+                                    mensaje.show();
+                                    //Toast.makeText(parque.this, "Parece que tenemos un problema. Inténtalo más tarde", Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }
@@ -377,7 +443,15 @@ public class parque extends AppCompatActivity {
         else
         {
             //Que hacer si el usuario no se encuentra logueado
-            Toast.makeText(this, "Para poder agregar favoritos debe iniciar sesión", Toast.LENGTH_LONG).show();
+            mensaje = Snackbar.make(findViewById(android.R.id.content), "Para poder agregar favoritos debe iniciar sesión", Snackbar.LENGTH_INDEFINITE);
+            mensaje.setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mensaje.dismiss();
+                }
+            });
+            mensaje.show();
+            //Toast.makeText(this, "Para poder agregar favoritos debe iniciar sesión", Toast.LENGTH_LONG).show();
 
         }
 
